@@ -1,5 +1,5 @@
 # BOOTD -  app_6
-Flutter project.
+A mobile application project
 
 ## Introduction
 Instagram like 
