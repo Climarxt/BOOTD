@@ -1,6 +1,10 @@
-# BOOTD -  app_6
+# BOOTD
 A mobile application project
 
 ## Introduction
 Instagram like 
+
+## Version
+app_6
+
 
