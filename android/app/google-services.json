@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "198080770535",
+    "firebase_url": "https://app6-f1b21-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "app6-f1b21",
     "storage_bucket": "app6-f1b21.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "198080770535-v7rcldj0fkfhhat8pplnnf0eij6snmvb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "198080770535-aoslnr0aputau2ifurej6s74r98mbqvd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.app-6"
+              }
             }
           ]
         }
