@@ -187,7 +187,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: CachedNetworkImage(
                               fadeInDuration: const Duration(microseconds: 0),
                               fadeOutDuration: const Duration(microseconds: 0),
-                              imageUrl: post!.imageUrl,
+                              imageUrl: post!.thumbnailUrl,
+                              width: 100,
+                              height: 100,
                               fit: BoxFit.cover,
                             ),
                           );

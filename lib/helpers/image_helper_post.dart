@@ -17,7 +17,7 @@ class ImageHelperPost {
   Future<XFile?> pickImage({
     // required BuildContext context,
     ImageSource source = ImageSource.gallery,
-    int imageQuality = 100,
+    int imageQuality = 50,
   }) async {
     return await _imagePicker.pickImage(
         source: source, imageQuality: imageQuality);
@@ -30,7 +30,7 @@ class ImageHelperPost {
       await _imageCropper.cropImage(
         cropStyle: cropStyle,
         sourcePath: file.path,
-        compressQuality: 100,
+        compressQuality: 50,
         aspectRatio: const CropAspectRatio(ratioX: 0.7, ratioY: 1.0),
       );
 }

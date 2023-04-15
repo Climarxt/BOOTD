@@ -17,7 +17,7 @@ class ImageHelperProfile {
   Future<XFile?> pickImage({
     // required BuildContext context,
     ImageSource source = ImageSource.gallery,
-    int imageQuality = 100,
+    int imageQuality = 25,
   }) async {
     return await _imagePicker.pickImage(
         source: source, imageQuality: imageQuality);

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import '/repositories/storage/base_storage_repository.dart';
@@ -20,6 +21,22 @@ class StorageRepository extends BaseStorageRepository {
         .putFile(image)
         .then((taskSnapshot) => taskSnapshot.ref.getDownloadURL());
     return downloadUrl;
+  }
+
+  Future<String> uploadThumbnailImage(
+      {required Uint8List thumbnailImageBytes}) async {
+    final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('images')
+        .child('thumbnails')
+        .child(fileName);
+
+    final uploadTask = firebaseStorageRef.putData(thumbnailImageBytes);
+    final taskSnapshot = await uploadTask.whenComplete(() {});
+    final thumbnailUrl = await taskSnapshot.ref.getDownloadURL();
+
+    return thumbnailUrl;
   }
 
   @override

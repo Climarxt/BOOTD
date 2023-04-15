@@ -8,6 +8,7 @@ class Post extends Equatable {
   final String? id;
   final User author;
   final String imageUrl;
+  final String thumbnailUrl;
   final String caption;
   final int likes;
   final DateTime date;
@@ -16,6 +17,7 @@ class Post extends Equatable {
     this.id,
     required this.author,
     required this.imageUrl,
+    required this.thumbnailUrl,
     required this.caption,
     required this.likes,
     required this.date,
@@ -26,6 +28,7 @@ class Post extends Equatable {
         id,
         author,
         imageUrl,
+        thumbnailUrl,
         caption,
         likes,
         date,
@@ -35,6 +38,7 @@ class Post extends Equatable {
     String? id,
     User? author,
     String? imageUrl,
+    String? thumbnailUrl,
     String? caption,
     int? likes,
     DateTime? date,
@@ -43,6 +47,7 @@ class Post extends Equatable {
       id: id ?? this.id,
       author: author ?? this.author,
       imageUrl: imageUrl ?? this.imageUrl,
+      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
       caption: caption ?? this.caption,
       likes: likes ?? this.likes,
       date: date ?? this.date,
@@ -54,6 +59,7 @@ class Post extends Equatable {
       'author':
           FirebaseFirestore.instance.collection(Paths.users).doc(author.id),
       'imageUrl': imageUrl,
+      'thumbnailUrl': thumbnailUrl,
       'caption': caption,
       'likes': likes,
       'date': Timestamp.fromDate(date),
@@ -70,6 +76,7 @@ class Post extends Equatable {
           id: doc.id,
           author: User.fromSnapshot(authorDoc),
           imageUrl: data['imageUrl'] ?? '',
+          thumbnailUrl: data['thumbnailUrl'] ?? '',
           caption: data['caption'] ?? '',
           likes: (data['likes'] ?? 0).toInt(),
           date: (data['date'] as Timestamp).toDate(),
