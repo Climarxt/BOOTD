@@ -6,7 +6,7 @@ import '../../createpost/cubit/create_post_cubit.dart';
 import '../../feed/bloc/feed_bloc.dart';
 import '../../notifications/bloc/notifications_bloc.dart';
 import '../../profile/bloc/profile_bloc.dart';
-import '../../search/cubit/search_cubit.dart';
+import '../../swipe/cubit/search_cubit.dart';
 import '/blocs/blocs.dart';
 import '/config/config.dart';
 import '/repositories/repositories.dart';

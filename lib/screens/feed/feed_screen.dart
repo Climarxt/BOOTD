@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../events_screens/events.dart';
 import '../profile/widgets/widgets.dart';
-import '../search/cubit/search_cubit.dart';
+import '../swipe/cubit/search_cubit.dart';
 import '/cubits/cubits.dart';
 import '/screens/feed/bloc/feed_bloc.dart';
 import '/widgets/widgets.dart';
@@ -136,31 +136,30 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
             context.read<FeedBloc>().add(FeedFetchPosts());
             context.read<LikedPostsCubit>().clearAllLikedPosts();
           },
-          child: ListView.builder(
+          child: ListView.separated(
             physics: const BouncingScrollPhysics(),
-            cacheExtent: 5500,
+            cacheExtent: 7500,
             controller: _scrollController,
             itemCount: state.posts.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(height: 10),
             itemBuilder: (BuildContext context, int index) {
               final post = state.posts[index];
               final likedPostsState = context.watch<LikedPostsCubit>().state;
               final isLiked = likedPostsState.likedPostIds.contains(post!.id);
               final recentlyLiked =
                   likedPostsState.recentlyLikedPostIds.contains(post.id);
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: PostView(
-                  post: post,
-                  isLiked: isLiked,
-                  recentlyLiked: recentlyLiked,
-                  onLike: () {
-                    if (isLiked) {
-                      context.read<LikedPostsCubit>().unlikePost(post: post);
-                    } else {
-                      context.read<LikedPostsCubit>().likePost(post: post);
-                    }
-                  },
-                ),
+              return PostView(
+                post: post,
+                isLiked: isLiked,
+                recentlyLiked: recentlyLiked,
+                onLike: () {
+                  if (isLiked) {
+                    context.read<LikedPostsCubit>().unlikePost(post: post);
+                  } else {
+                    context.read<LikedPostsCubit>().likePost(post: post);
+                  }
+                },
               );
             },
           ),

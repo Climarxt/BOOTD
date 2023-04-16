@@ -6,7 +6,7 @@ export 'login/login_mail_screen.dart';
 export 'signup/signup_screen.dart';
 export 'signup/signup_demo_screen.dart';
 export 'feed/feed_screen.dart';
-export 'search/search_screen.dart';
+export 'swipe/swipe_screen.dart';
 export 'createpost/createpost_screen.dart';
 export 'notifications/notifications_screen.dart';
 export 'profile/profile_screen.dart';

@@ -103,7 +103,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                 decoration: const BoxDecoration(
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                            'https://firebasestorage.googleapis.com/v0/b/app4-f4c8e.appspot.com/o/posts%2FH839Mz01JThiLqhQuSGBBMniHS62%2F6f482ce0-78dd-11ed-9d27-67e9d8d5eaf7?alt=media&token=a1121de9-7f17-4169-b893-30845c6076e9'),
+                                            'https://firebasestorage.googleapis.com/v0/b/app6-f1b21.appspot.com/o/images%2Fposts%2Fpost_e5af98f9-7adb-478f-8a18-71d897d3e68b.jpg?alt=media&token=ace3779f-cc7d-4f0f-a23c-35719ab4c3d2'),
                                         fit: BoxFit.cover)),
                               ),
                               Positioned(
@@ -151,7 +151,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                 decoration: const BoxDecoration(
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                            'https://firebasestorage.googleapis.com/v0/b/app4-f4c8e.appspot.com/o/posts%2F0oCc5CXo49cDqXfMCQPmIdpMehX2%2F4a4f1410-78df-11ed-9ffc-07af88105822?alt=media&token=bc6cdf5a-09a2-4b69-a18c-2845769c46cd'),
+                                            'https://firebasestorage.googleapis.com/v0/b/app6-f1b21.appspot.com/o/images%2Fposts%2Fpost_4def9ea3-d748-41c4-9a4d-5e042e386616.jpg?alt=media&token=433cc76c-6c47-4218-aad1-e5ebf63a943e'),
                                         fit: BoxFit.cover)),
                               ),
                               Positioned(
