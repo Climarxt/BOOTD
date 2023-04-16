@@ -68,7 +68,10 @@ class _ProfileScreenState extends State<ProfileScreen>
           );
         }
         if (state.status == ProfileStatus.loaded) {
-          return Scaffold(appBar: _buildAppBar(state), body: _buildBody(state));
+          return Scaffold(
+            appBar: ProfileAppBar(parentContext: context, state: state),
+            body: _buildBody(state),
+          );
         } else {
           return const Text(
             'Something went wrong.',
@@ -77,38 +80,6 @@ class _ProfileScreenState extends State<ProfileScreen>
         }
       },
     );
-  }
-
-  AppBar _buildAppBar(ProfileState state) {
-    return AppBar(
-      backgroundColor: mobileBackgroundColor,
-      iconTheme: const IconThemeData(
-        color: black,
-      ),
-      elevation: 3,
-      centerTitle: true,
-      title: Text(
-        state.user.username,
-        style: const TextStyle(color: black),
-      ),
-      actions: _buildAppBarActions(state),
-    );
-  }
-
-  List<Widget> _buildAppBarActions(ProfileState state) {
-    if (state.isCurrentUser) {
-      return [
-        IconButton(
-          icon: const Icon(Icons.exit_to_app),
-          onPressed: () {
-            context.read<AuthBloc>().add(AuthLogoutRequested());
-            MyApp.navigatorKey.currentState!
-                .pushReplacementNamed(LoginScreen.routeName);
-          },
-        ),
-      ];
-    }
-    return [];
   }
 
   Widget _buildBody(ProfileState state) {
@@ -193,12 +164,8 @@ class _ProfileScreenState extends State<ProfileScreen>
     return TabBarView(
       controller: _tabController,
       children: [
-        PersistentGridView(
-            context: context,
-            state: state), 
-        PersistentListView(
-            context: context,
-            state: state),
+        PersistentGridView(context: context, state: state),
+        PersistentListView(context: context, state: state),
       ],
     );
   }
