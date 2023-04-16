@@ -39,11 +39,19 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _currentIndex = 0;
+  bool _forceLoading = true;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // Forcer le chargement du CircularProgressIndicator pendant x secondes
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        _forceLoading = false;
+      });
+    });
   }
 
   @override
@@ -56,9 +64,19 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state.status == ProfileStatus.loading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+        if (_forceLoading) {
+          return Scaffold(
+            appBar: ProfileAppBar(parentContext: context, state: state),
+            body: Stack(
+              children: [
+                Offstage(
+                  child: _buildBody(state),
+                ),
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ],
+            ),
           );
         }
         if (state.status == ProfileStatus.loaded) {

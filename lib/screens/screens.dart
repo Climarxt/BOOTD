@@ -10,6 +10,6 @@ export 'search/search_screen.dart';
 export 'createpost/createpost_screen.dart';
 export 'notifications/notifications_screen.dart';
 export 'profile/profile_screen.dart';
-export 'edit_profile/edit_profile_screen.dart';
+export 'profile_edit/profile_edit_screen.dart';
 export 'comments/comments_screen.dart';
 export 'policies/policies.dart';

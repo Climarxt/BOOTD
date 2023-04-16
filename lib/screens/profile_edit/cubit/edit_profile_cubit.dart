@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import '/models/models.dart';
 import '/repositories/repositories.dart';
 import '/screens/profile/bloc/profile_bloc.dart';
@@ -24,6 +25,18 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     // Initialise ces deux valeurs lors de l'ouverture du screen:
     final user = _profileBloc.state.user;
     emit(state.copyWith(username: user.username, bio: user.bio));
+  }
+
+  Future<File> compressImage(File imageFile, {int quality = 45}) async {
+    final filePath = imageFile.absolute.path;
+    final lastIndex = filePath.lastIndexOf(Platform.pathSeparator);
+    final newPath = filePath.substring(0, lastIndex);
+    final compressedImage = await FlutterImageCompress.compressAndGetFile(
+      imageFile.absolute.path,
+      '$newPath/compressed.jpg',
+      quality: quality,
+    );
+    return compressedImage!;
   }
 
   void profileImageChanged(File image) {
@@ -51,9 +64,12 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
       var profileImageUrl = user.profileImageUrl;
       if (state.profileImage != null) {
+        // Compress the image before uploading it
+        File compressedImage = await compressImage(state.profileImage!);
+
         profileImageUrl = await _storageRepository.uploadProfileImage(
           url: profileImageUrl,
-          image: state.profileImage!,
+          image: compressedImage,
         );
       }
 
