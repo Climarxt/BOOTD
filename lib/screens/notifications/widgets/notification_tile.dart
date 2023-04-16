@@ -55,7 +55,7 @@ class NotificationTile extends StatelessWidget {
   String _getText(Notif notification) {
     switch (notification.type) {
       case NotifType.like:
-        return 'a aimé votre message.';
+        return 'a aimé votre post.';
       case NotifType.comment:
         return 'a commenté votre post.';
       case NotifType.follow:
