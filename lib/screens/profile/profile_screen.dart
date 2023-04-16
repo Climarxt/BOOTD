@@ -1,10 +1,7 @@
 import 'package:app_6/blocs/auth/auth_bloc.dart';
 import 'package:app_6/config/colors.dart';
-import 'package:app_6/cubits/liked_posts/liked_posts_cubit.dart';
-import 'package:app_6/repositories/auth/auth_repository.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -256,13 +253,15 @@ class _ProfileScreenState extends State<ProfileScreen>
           const SizedBox(
             height: 10,
           ),
-          _buildTwoButtons(state.user.following, "ABONNEMENTS", state.user.followers, "ABONNÉS"),
+          _buildTwoButtons(state.user.following, "ABONNEMENTS",
+              state.user.followers, "ABONNÉS"),
         ],
       ),
     );
   }
 
-  Widget _buildTwoButtons(int count1, String label1, int count2, String label2) {
+  Widget _buildTwoButtons(
+      int count1, String label1, int count2, String label2) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
