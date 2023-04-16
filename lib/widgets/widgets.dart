@@ -4,3 +4,4 @@ export 'square_tile.dart';
 export 'my_textfield.dart';
 export 'my_button.dart';
 export 'centered_text.dart';
+export 'post_view.dart';

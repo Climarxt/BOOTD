@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../config/config.dart';
 
-ButtonTheme buildButton(int num, String Texte) {
+ButtonTheme buildButton(int num, String texte) {
   return ButtonTheme(
     minWidth: double.infinity,
     child: OutlinedButton(
@@ -19,7 +19,7 @@ ButtonTheme buildButton(int num, String Texte) {
                   fontSize: 20, fontWeight: FontWeight.bold, color: black),
             ),
             Text(
-              Texte,
+              texte,
               style: const TextStyle(
                   fontSize: 12, fontWeight: FontWeight.w400, color: black),
             ),

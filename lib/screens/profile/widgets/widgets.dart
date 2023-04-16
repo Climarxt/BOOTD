@@ -4,4 +4,7 @@ export 'profile_info.dart';
 export 'gridview.dart';
 export 'listview.dart';
 export 'button.dart';
-export '../../../widgets/post_view.dart';
+export 'section_buttons.dart';
+export 'section_location.dart';
+export 'section_socialnet.dart';
+export 'section_about.dart';

@@ -7,13 +7,16 @@ class PersistentGridView extends StatefulWidget {
   final BuildContext context;
   final ProfileState state;
 
-  PersistentGridView({required this.context, required this.state});
+  const PersistentGridView(
+      {super.key, required this.context, required this.state});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PersistentGridViewState createState() => _PersistentGridViewState();
 }
 
-class _PersistentGridViewState extends State<PersistentGridView> with AutomaticKeepAliveClientMixin {
+class _PersistentGridViewState extends State<PersistentGridView>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -24,31 +27,31 @@ class _PersistentGridViewState extends State<PersistentGridView> with AutomaticK
   }
 }
 
-  Widget _buildGridView(BuildContext context, ProfileState state) {
-    return SingleChildScrollView(
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 2.0,
-          crossAxisSpacing: 2.0,
-        ),
-        itemBuilder: (context, index) {
-          final post = state.posts[index];
-          return GestureDetector(
-            onTap: () {},
-            child: CachedNetworkImage(
-              fadeInDuration: const Duration(microseconds: 0),
-              fadeOutDuration: const Duration(microseconds: 0),
-              imageUrl: post!.thumbnailUrl,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-          );
-        },
-        itemCount: state.posts.length,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+Widget _buildGridView(BuildContext context, ProfileState state) {
+  return SingleChildScrollView(
+    child: GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 2.0,
+        crossAxisSpacing: 2.0,
       ),
-    );
-  }
+      itemBuilder: (context, index) {
+        final post = state.posts[index];
+        return GestureDetector(
+          onTap: () {},
+          child: CachedNetworkImage(
+            fadeInDuration: const Duration(microseconds: 0),
+            fadeOutDuration: const Duration(microseconds: 0),
+            imageUrl: post!.thumbnailUrl,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        );
+      },
+      itemCount: state.posts.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+    ),
+  );
+}
