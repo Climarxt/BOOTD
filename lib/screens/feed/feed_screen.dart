@@ -14,9 +14,10 @@ import '/widgets/widgets.dart';
 class FeedScreen extends StatefulWidget {
   static const String routeName = '/feed';
 
-  const FeedScreen();
+  const FeedScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _FeedScreenState createState() => _FeedScreenState();
 }
 
@@ -55,14 +56,6 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
           showDialog(
             context: context,
             builder: (context) => ErrorDialog(content: state.failure.message),
-          );
-        } else if (state.status == FeedStatus.paginating) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Theme.of(context).primaryColor,
-              duration: const Duration(seconds: 1),
-              content: const Text('Charge plus de posts...'),
-            ),
           );
         }
       },
@@ -135,38 +128,61 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
       case FeedStatus.loading:
         return const Center(child: CircularProgressIndicator());
       default:
-        return RefreshIndicator(
-          onRefresh: () async {
-            context.read<FeedBloc>().add(FeedFetchPosts());
-            context.read<LikedPostsCubit>().clearAllLikedPosts();
-          },
-          child: ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            cacheExtent: 7500,
-            controller: _scrollController,
-            itemCount: state.posts.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(height: 10),
-            itemBuilder: (BuildContext context, int index) {
-              final post = state.posts[index];
-              final likedPostsState = context.watch<LikedPostsCubit>().state;
-              final isLiked = likedPostsState.likedPostIds.contains(post!.id);
-              final recentlyLiked =
-                  likedPostsState.recentlyLikedPostIds.contains(post.id);
-              return PostView(
-                post: post,
-                isLiked: isLiked,
-                recentlyLiked: recentlyLiked,
-                onLike: () {
-                  if (isLiked) {
-                    context.read<LikedPostsCubit>().unlikePost(post: post);
+        return Stack(
+          children: [
+            RefreshIndicator(
+              onRefresh: () async {
+                context.read<FeedBloc>().add(FeedFetchPosts());
+                context.read<LikedPostsCubit>().clearAllLikedPosts();
+              },
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                cacheExtent: 10000,
+                controller: _scrollController,
+                itemCount: state.posts.length + 1,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(height: 10),
+                itemBuilder: (BuildContext context, int index) {
+                  // Si l'index est égal à la longueur des éléments, affichez un CircularProgressIndicator
+                  // ou un SizedBox vide si la pagination n'est pas en cours
+                  if (index == state.posts.length) {
+                    return state.status == FeedStatus.paginating
+                        ? const Center(child: CircularProgressIndicator())
+                        : const SizedBox.shrink();
                   } else {
-                    context.read<LikedPostsCubit>().likePost(post: post);
+                    final post = state.posts[index];
+                    final likedPostsState =
+                        context.watch<LikedPostsCubit>().state;
+                    final isLiked =
+                        likedPostsState.likedPostIds.contains(post!.id);
+                    final recentlyLiked =
+                        likedPostsState.recentlyLikedPostIds.contains(post.id);
+                    return PostView(
+                      post: post,
+                      isLiked: isLiked,
+                      recentlyLiked: recentlyLiked,
+                      onLike: () {
+                        if (isLiked) {
+                          context
+                              .read<LikedPostsCubit>()
+                              .unlikePost(post: post);
+                        } else {
+                          context.read<LikedPostsCubit>().likePost(post: post);
+                        }
+                      },
+                    );
                   }
                 },
-              );
-            },
-          ),
+              ),
+            ),
+            if (state.status == FeedStatus.paginating)
+              const Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+          ],
         );
     }
   }
