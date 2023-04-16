@@ -1,39 +1,49 @@
 import 'package:flutter/material.dart';
+import '../../../widgets/widgets.dart';
+import '../bloc/profile_bloc.dart';
+import 'widgets.dart';
 
 class ProfileInfo extends StatelessWidget {
-  final String username;
-  final String bio;
-
-  const ProfileInfo({
-    Key? key,
-    required this.username,
-    required this.bio,
-  }) : super(key: key);
+  final ProfileState state;
+  final BuildContext context;
+  const ProfileInfo({super.key, required this.context, required this.state});
 
   @override
   Widget build(BuildContext context) {
+    return _buildProfileInfo(state);
+  }
+
+  Widget _buildProfileInfo(ProfileState state) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            username,
-            style: const TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
+          padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0),
+          child: Row(
+            children: [
+              UserProfileImage(
+                radius: 40.0,
+                radiusbackground: 41,
+                profileImageUrl: state.user.profileImageUrl,
+              ),
+              ProfileStats(
+                isCurrentUser: state.isCurrentUser,
+                isFollowing: state.isFollowing,
+                posts: state.posts.length,
+                followers: state.user.followers,
+                following: state.user.following,
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 8.0),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            bio,
-            style: const TextStyle(fontSize: 15.0),
+          padding: const EdgeInsets.symmetric(
+            vertical: 10.0,
+          ),
+          child: ProfileUserBio(
+            username: state.user.username,
+            bio: state.user.bio,
           ),
         ),
-        const Divider(),
       ],
     );
   }

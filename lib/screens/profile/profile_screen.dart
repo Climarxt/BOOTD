@@ -1,16 +1,10 @@
 import 'package:app_6/blocs/auth/auth_bloc.dart';
 import 'package:app_6/config/colors.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../main.dart';
 import '../../repositories/repositories.dart';
-import '../../widgets/widgets.dart';
-import '../screens.dart';
 import 'bloc/profile_bloc.dart';
-import 'widgets/button.dart';
 import 'widgets/widgets.dart';
 
 class ProfileScreenArgs {
@@ -95,48 +89,14 @@ class _ProfileScreenState extends State<ProfileScreen>
           },
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(child: _buildProfileInfo(state)),
+              SliverToBoxAdapter(
+                  child: ProfileInfo(context: context, state: state)),
               SliverToBoxAdapter(child: _buildTabBar(context, state)),
               SliverFillRemaining(child: _buildTabBarView(context, state)),
             ],
           ),
         );
     }
-  }
-
-  Widget _buildProfileInfo(ProfileState state) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0),
-          child: Row(
-            children: [
-              UserProfileImage(
-                radius: 40.0,
-                radiusbackground: 41,
-                profileImageUrl: state.user.profileImageUrl,
-              ),
-              ProfileStats(
-                isCurrentUser: state.isCurrentUser,
-                isFollowing: state.isFollowing,
-                posts: state.posts.length,
-                followers: state.user.followers,
-                following: state.user.following,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10.0,
-          ),
-          child: ProfileInfo(
-            username: state.user.username,
-            bio: state.user.bio,
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _buildTabBar(BuildContext context, ProfileState state) {
