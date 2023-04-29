@@ -23,36 +23,33 @@ class NotificationTile extends StatelessWidget {
         outerCircleRadius: 19,
         profileImageUrl: notification.fromUser.profileImageUrl,
       ),
-      title: Text.rich(
-        TextSpan(
-          children: [
-            TextSpan(
-              text: notification.fromUser.username,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
+      title: buildNotificationText(),
+      subtitle: buildDateText(),
+      trailing: buildTrailing(context),
+      onTap: () => navigateToProfileScreen(context),
+    );
+  }
+
+  // Builds the text for the notification.
+  Text buildNotificationText() {
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: notification.fromUser.username,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
             ),
-            const TextSpan(text: ' '),
-            TextSpan(text: _getText(notification)),
-          ],
-        ),
-      ),
-      subtitle: Text(
-        DateFormat.yMd('fr_FR').add_jm().format(notification.date),
-        style: TextStyle(
-          color: Colors.grey[600],
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: _getTrailing(context, notification),
-      onTap: () => Navigator.of(context).pushNamed(
-        ProfileScreen.routeName,
-        arguments: ProfileScreenArgs(userId: notification.fromUser.id),
+          ),
+          const TextSpan(text: ' '),
+          TextSpan(text: getNotificationMessage()),
+        ],
       ),
     );
   }
 
-  String _getText(Notif notification) {
+  // Gets the appropriate message for the notification type.
+  String getNotificationMessage() {
     switch (notification.type) {
       case NotifType.like:
         return 'a aimé votre post.';
@@ -65,21 +62,29 @@ class NotificationTile extends StatelessWidget {
     }
   }
 
-  Widget _getTrailing(BuildContext context, Notif notif) {
-    if (notification.type == NotifType.like ||
-        notification.type == NotifType.comment) {
-      return GestureDetector(
-        onTap: () => Navigator.of(context).pushNamed(
-          CommentsScreen.routeName,
-          arguments: CommentsScreenArgs(post: notification.post!),
-        ),
-        child: CachedNetworkImage(
-          height: 60.0,
-          width: 60.0,
-          imageUrl: notification.post!.imageUrl,
-          fit: BoxFit.cover,
-        ),
-      );
+  // Builds the date text for the notification.
+  Text buildDateText() {
+    return Text(
+      DateFormat.yMd('fr_FR').add_jm().format(notification.date),
+      style: TextStyle(
+        color: Colors.grey[600],
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  // Navigates to the profile screen.
+  void navigateToProfileScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      ProfileScreen.routeName,
+      arguments: ProfileScreenArgs(userId: notification.fromUser.id),
+    );
+  }
+
+  // Builds the trailing widget for the notification.
+  Widget buildTrailing(BuildContext context) {
+    if (notification.type == NotifType.like || notification.type == NotifType.comment) {
+      return buildPostImage(context);
     } else if (notification.type == NotifType.follow) {
       return const SizedBox(
         height: 60.0,
@@ -88,5 +93,26 @@ class NotificationTile extends StatelessWidget {
       );
     }
     return const SizedBox.shrink();
+  }
+
+  // Builds the post image for the notification.
+  Widget buildPostImage(BuildContext context) {
+    return GestureDetector(
+      onTap: () => navigateToCommentsScreen(context),
+      child: CachedNetworkImage(
+        height: 60.0,
+        width: 60.0,
+        imageUrl: notification.post!.imageUrl,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  // Navigates to the comments screen.
+  void navigateToCommentsScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      CommentsScreen.routeName,
+      arguments: CommentsScreenArgs(post: notification.post!),
+    );
   }
 }
