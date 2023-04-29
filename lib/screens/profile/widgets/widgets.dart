@@ -10,3 +10,4 @@ export 'section_buttons.dart';
 export 'section_location.dart';
 export 'section_socialnet.dart';
 export 'section_about.dart';
+export 'stats.dart';

@@ -23,54 +23,33 @@ class ProfileStats extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _Stats(count: posts, label: 'posts'),
-              _Stats(count: followers, label: 'followers'),
-              _Stats(count: following, label: 'following'),
-            ],
-          ),
+          buildStatisticsRow(),
           const SizedBox(height: 8.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: ProfileButton(
-              isCurrentUser: isCurrentUser,
-              isFollowing: isFollowing,
-            ),
-          ),
+          buildProfileButton(),
         ],
+      ),
+    );
+  }
+
+  Row buildStatisticsRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Stats(count: posts, label: 'posts'),
+        Stats(count: followers, label: 'followers'),
+        Stats(count: following, label: 'following'),
+      ],
+    );
+  }
+
+  Padding buildProfileButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: ProfileButton(
+        isCurrentUser: isCurrentUser,
+        isFollowing: isFollowing,
       ),
     );
   }
 }
 
-class _Stats extends StatelessWidget {
-  final int count;
-  final String label;
-
-  const _Stats({
-    Key? key,
-    required this.count,
-    required this.label,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          count.toString(),
-          style: const TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        Text(
-          label,
-          style: const TextStyle(color: Colors.black54),
-        ),
-      ],
-    );
-  }
-}
