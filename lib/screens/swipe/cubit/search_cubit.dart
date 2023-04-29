@@ -29,4 +29,8 @@ class SearchCubit extends Cubit<SearchState> {
   void clearSearch() {
     emit(state.copyWith(users: [], status: SearchStatus.initial));
   }
+
+  void resetSearch() {
+  emit(SearchState.initial());
+}
 }
