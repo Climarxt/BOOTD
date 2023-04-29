@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                  child: ProfileInfo(context: context, state: state)),
+                  child: ProfileInfo(state: state)),
               SliverToBoxAdapter(child: _buildTabBar(context, state)),
               SliverFillRemaining(child: _buildTabBarView(context, state)),
             ],

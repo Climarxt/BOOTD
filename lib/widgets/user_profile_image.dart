@@ -7,44 +7,62 @@ import '../config/config.dart';
 
 class UserProfileImage extends StatelessWidget {
   final double radius;
-  final double radiusbackground;
+  final double outerCircleRadius;
   final String profileImageUrl;
   final File? profileImage;
 
   const UserProfileImage({
     Key? key,
     required this.radius,
-    required this.radiusbackground,
+    required this.outerCircleRadius,
     required this.profileImageUrl,
     this.profileImage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return buildOuterCircle();
+  }
+
+  CircleAvatar buildOuterCircle() {
     return CircleAvatar(
-      radius: radiusbackground,
+      radius: outerCircleRadius,
       backgroundColor: white,
-      child: CircleAvatar(
-        radius: radius,
-        backgroundColor: Colors.grey[200],
-        backgroundImage: profileImage != null
-            ? FileImage(profileImage!) as ImageProvider
-            : profileImageUrl.isNotEmpty
-                ? CachedNetworkImageProvider(profileImageUrl)
-                : null,
-        child: _noProfileIcon(),
-      ),
+      child: buildInnerCircle(),
     );
   }
 
-  Icon? _noProfileIcon() {
-    if (profileImage == null && profileImageUrl.isEmpty) {
-      return Icon(
-        Icons.account_circle,
-        color: Colors.grey[400],
-        size: radius * 2,
-      );
+  CircleAvatar buildInnerCircle() {
+    return CircleAvatar(
+      radius: radius,
+      backgroundColor: Colors.grey[200],
+      backgroundImage: getProfileImage(),
+      child: getNoProfileIcon(),
+    );
+  }
+
+  ImageProvider<Object>? getProfileImage() {
+    if (profileImage != null) {
+      return FileImage(profileImage!);
+    }
+    if (profileImageUrl.isNotEmpty) {
+      return CachedNetworkImageProvider(profileImageUrl);
     }
     return null;
+  }
+
+  Icon? getNoProfileIcon() {
+    if (profileImage == null && profileImageUrl.isEmpty) {
+      return buildDefaultProfileIcon();
+    }
+    return null;
+  }
+
+  Icon buildDefaultProfileIcon() {
+    return Icon(
+      Icons.account_circle,
+      color: Colors.grey[400],
+      size: radius * 2,
+    );
   }
 }

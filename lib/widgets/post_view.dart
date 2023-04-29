@@ -76,7 +76,7 @@ class PostView extends StatelessWidget {
           ),
           child: UserProfileImage(
             radius: 22.0,
-            radiusbackground: 23,
+            outerCircleRadius: 23,
             profileImageUrl: post.author.profileImageUrl,
           ),
         ),

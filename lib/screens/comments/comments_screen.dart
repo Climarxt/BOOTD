@@ -78,7 +78,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               final comment = state.comments[index];
               return ListTile(
                 leading: UserProfileImage(
-                  radiusbackground: 23,
+                  outerCircleRadius: 23,
                   radius: 22.0,
                   profileImageUrl: comment!.author.profileImageUrl,
                 ),

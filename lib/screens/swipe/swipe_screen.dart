@@ -72,7 +72,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                           return ListTile(
                             leading: UserProfileImage(
                               radius: 22.0,
-                              radiusbackground: 23,
+                              outerCircleRadius: 23,
                               profileImageUrl: user.profileImageUrl,
                             ),
                             title: Text(

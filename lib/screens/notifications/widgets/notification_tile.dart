@@ -20,7 +20,7 @@ class NotificationTile extends StatelessWidget {
     return ListTile(
       leading: UserProfileImage(
         radius: 18.0,
-        radiusbackground: 19,
+        outerCircleRadius: 19,
         profileImageUrl: notification.fromUser.profileImageUrl,
       ),
       title: Text.rich(

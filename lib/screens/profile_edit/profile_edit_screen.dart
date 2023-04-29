@@ -98,7 +98,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     },
                     child: UserProfileImage(
                       radius: 80.0,
-                      radiusbackground: 81,
+                      outerCircleRadius: 81,
                       profileImageUrl: widget.user.profileImageUrl,
                       profileImage: state.profileImage,
                     ),
